@@ -19,4 +19,12 @@
         android:layout_marginRight="112.5dp"
         android:onClick ="OnToast"
     />
+    <ImageButton
+        android:src="@android:drawable/cameraIcon.png"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton1"
+        android:layout_marginTop="451.5dp"
+        android:layout_marginLeft="11.0dp"
+        android:contentDescription="description" />
 </RelativeLayout>

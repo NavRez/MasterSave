@@ -28,8 +28,8 @@ namespace App1
         public void OnToast(View view)
         {
            var hello = "hello";
-           Vision vision = new Vision();
-           vision.LoadImage();
+            Vision vision = new Vision();
+            vision.Execute();
            Toast.MakeText(Android.App.Application.Context, hello, ToastLength.Long).Show();
         }
     }
