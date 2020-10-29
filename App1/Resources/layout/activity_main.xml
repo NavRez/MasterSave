@@ -5,25 +5,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_dark"
     android:minWidth="25px"
     android:minHeight="25px">
 
 
     <ImageButton
         android:src="@mipmap/cameraicon"
-        android:layout_width="120.0dp"
-        android:layout_height="100.0dp"
-        android:id="@+id/imageButton1"
+        android:layout_width="149.0dp"
+        android:layout_height="104.0dp"
+        android:id="@+id/cameraButton"
         android:layout_marginTop="436.5dp"
         android:layout_marginLeft="13.0dp"
-        android:onClick="OnCamera"
+        android:background="@android:color/holo_orange_light"
         />
 
     <Button
         android:text="Test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button2"
+        android:id="@+id/testButton"
         android:layout_marginBottom="296.0dp"
         android:layout_marginTop="215.0dp"
         android:layout_marginLeft="164.0dp"
