@@ -8,10 +8,21 @@
     android:minWidth="25px"
     android:minHeight="25px">
 
+
+    <ImageButton
+        android:src="@mipmap/cameraicon"
+        android:layout_width="120.0dp"
+        android:layout_height="100.0dp"
+        android:id="@+id/imageButton1"
+        android:layout_marginTop="436.5dp"
+        android:layout_marginLeft="13.0dp"
+        android:onClick="OnCamera"
+        />
+
     <Button
         android:text="Test"
-        android:layout_width="112.5dp"
-        android:layout_height="330.5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/button2"
         android:layout_marginBottom="296.0dp"
         android:layout_marginTop="215.0dp"

@@ -4,6 +4,8 @@ using Android.Support.V7.App;
 using Android.Runtime;
 using Android.Widget;
 using Android.Views;
+using System;
+using Android.Content;
 
 namespace App1
 {
@@ -32,5 +34,12 @@ namespace App1
            vision.LoadImage();
            Toast.MakeText(Android.App.Application.Context, hello, ToastLength.Long).Show();
         }
+        [Java.Interop.Export("OnCamera")]
+        public void OnCamera(View view)
+        {
+            var NxtAct = new Intent(this, typeof(CameraActivity));
+            StartActivity(NxtAct);
+        }
+
     }
 }
