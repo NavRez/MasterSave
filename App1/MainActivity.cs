@@ -13,6 +13,7 @@ namespace App1
     public class MainActivity : AppCompatActivity
     {
         ImageButton cameraButton;
+        RelativeLayout relativeLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -22,6 +23,12 @@ namespace App1
 
             cameraButton = (ImageButton)FindViewById(Resource.Id.cameraButton);
             cameraButton.Click += OnCamera;
+
+            /*System.Threading.Tasks.Task.Run(() =>
+            {
+                relativeLayout = (RelativeLayout)FindViewById(Resource.Id.mainActivityLayout);
+                relativeLayout.
+            });*/
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
@@ -33,13 +40,16 @@ namespace App1
         [Java.Interop.Export("OnToast")]
         public void OnToast(View view)
         {
-           var hello = "hello";
+
+           var hello = CosmosAccess.Test();
            Vision vision = new Vision();
            vision.LoadImage();
+
            Toast.MakeText(Android.App.Application.Context, hello, ToastLength.Long).Show();
         }
         public void OnCamera(Object sender, EventArgs e)
         {
+            cameraButton.SetBackgroundColor(Android.Graphics.Color.DeepPink);
             var NxtAct = new Intent(this, typeof(CameraActivity));
             StartActivity(NxtAct);
         }

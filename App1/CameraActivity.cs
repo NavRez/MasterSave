@@ -20,6 +20,7 @@ namespace App1
     {
         Button captureButton;
         ImageView imageView;
+        static int count = 0;
 
         readonly string[] permissions =
         {
@@ -45,13 +46,14 @@ namespace App1
             MediaFile photo;
             if (CrossMedia.Current.IsCameraAvailable)
             {
+                string name = String.Format("Receipt{0}.jpg", count.ToString());
                 photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions 
                 { 
                     Directory = "MasterSaveReceipts",
-                    Name = "Receipt.jpg"
+                    Name = name
                 
                 });
-
+                count++;
                 if (photo == null)
                 {
                     return;
