@@ -42,8 +42,6 @@ namespace App1
         {
 
            var hello = CosmosAccess.Test();
-           Vision vision = new Vision();
-           vision.LoadImage();
 
            Toast.MakeText(Android.App.Application.Context, hello, ToastLength.Long).Show();
         }

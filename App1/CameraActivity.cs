@@ -21,6 +21,7 @@ namespace App1
         Button captureButton;
         ImageView imageView;
         static int count = 0;
+        Vision vision;
 
         readonly string[] permissions =
         {
@@ -60,8 +61,10 @@ namespace App1
                 }
 
                 byte[] bus = System.IO.File.ReadAllBytes(photo.Path);
+                vision = new Vision(photo.Path);
                 Bitmap bitmap = BitmapFactory.DecodeByteArray(bus, 0, bus.Length);
                 imageView.SetImageBitmap(bitmap);
+                vision.LoadJson();
             }
             else
             {
