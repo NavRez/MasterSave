@@ -21,6 +21,17 @@
         android:background="@android:color/holo_orange_light"
         />
 
+
+    <ImageButton
+        android:src="@mipmap/ic_launcher_round"
+        android:layout_width="149.0dp"
+        android:layout_height="104.0dp"
+        android:id="@+id/calendarButton"
+        android:layout_marginTop="436.5dp"
+        android:layout_marginLeft="218.5dp"
+        android:background="@android:color/holo_orange_light"
+        />
+
     <Button
         android:text="Test"
         android:layout_width="wrap_content"

@@ -13,6 +13,7 @@ namespace App1
     public class MainActivity : AppCompatActivity
     {
         ImageButton cameraButton;
+        ImageButton calenderButton;
         RelativeLayout relativeLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -20,6 +21,9 @@ namespace App1
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
+
+            calenderButton = (ImageButton)FindViewById(Resource.Id.calendarButton);
+            calenderButton.Click += OnCalendar;
 
             cameraButton = (ImageButton)FindViewById(Resource.Id.cameraButton);
             cameraButton.Click += OnCamera;
@@ -53,6 +57,14 @@ namespace App1
             var NxtAct = new Intent(this, typeof(CameraActivity));
             StartActivity(NxtAct);
         }
+
+        public void OnCalendar(Object sender, EventArgs e)
+        {
+            var NxtAct = new Intent(this, typeof(CalendarActivity));
+            StartActivity(NxtAct);
+        }
+
+
 
     }
 }
