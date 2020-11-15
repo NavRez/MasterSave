@@ -9,6 +9,7 @@ using Microsoft.Azure.Cosmos;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Security.Authentication;
+using Newtonsoft.Json.Linq;
 
 namespace App1
 {
@@ -20,11 +21,21 @@ namespace App1
             ;
         }
 
+        public void AddJson(JObject jObject)
+        {
+            BsonDocument bsonElements = BsonDocument.Parse(jObject.ToString());
+            MongoCollection.InsertOne(bsonElements);
+        }
         public class Entity
         {
             public ObjectId _id { get; set; }
             public string Name { get; set; }
         }
+
+        MongoClient CosmosClient { get; set; }
+        IMongoDatabase MongoDatabase { get; set; }
+        IMongoCollection<BsonDocument> MongoCollection { get; set; }
+
         public static Dictionary<string, BsonValue> RetrieveDict()
         {
             string connectionString = @"mongodb://sara:rHFncA47vQfBGVYmZgIn6Q0Epc5gbdLvNYPvx6jwSP20cy65D2qQpzMWFgzRIOp1FHTfotmgfkqvgzeETkclZQ==@sara.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@sara@";
