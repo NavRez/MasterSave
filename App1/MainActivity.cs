@@ -46,8 +46,7 @@ namespace App1
         {
 
            var hello = CosmosAccess.RetrieveDict();
-           Vision vision = new Vision();
-           vision.LoadImage();
+
 
         }
         public void OnCamera(Object sender, EventArgs e)
