@@ -1,26 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Android;
 using Android.App;
-using Android.Content;
 using Android.Graphics;
+using Android.Graphics.Drawables;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
 namespace App1
 {
-    [Activity(Label = "CameraActivity")]
+    [Activity(Label = "CameraActivity", Theme = "@style/AppTheme")]
     public class CameraActivity : Activity
     {
         Button captureButton;
         ImageView imageView;
         static int count = 0;
+        Vision vision;
+        LinearLayout linearLayout;
 
         readonly string[] permissions =
         {
@@ -32,6 +29,12 @@ namespace App1
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_camera);
+
+            linearLayout = (LinearLayout)FindViewById(Resource.Id.cameraLayout);
+            AnimationDrawable animationDrawable = (AnimationDrawable)linearLayout.Background;
+            animationDrawable.SetEnterFadeDuration(2000);
+            animationDrawable.SetExitFadeDuration(4000);
+            animationDrawable.Start();
 
             captureButton = (Button)FindViewById(Resource.Id.capureButton);
             imageView = (ImageView)FindViewById(Resource.Id.pictureView);
@@ -60,8 +63,10 @@ namespace App1
                 }
 
                 byte[] bus = System.IO.File.ReadAllBytes(photo.Path);
+                vision = new Vision(photo.Path);
                 Bitmap bitmap = BitmapFactory.DecodeByteArray(bus, 0, bus.Length);
                 imageView.SetImageBitmap(bitmap);
+                vision.LoadJson();
             }
             else
             {
