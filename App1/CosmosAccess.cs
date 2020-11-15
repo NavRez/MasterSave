@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using System.Net;
-using Microsoft.Azure.Cosmos;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Security.Authentication;
+using Newtonsoft.Json.Linq;
 
 namespace App1
 {
@@ -17,9 +12,23 @@ namespace App1
 
         public CosmosAccess()
         {
-            ;
-        }
+            string connectionString =
+                @"test your input here";
+            MongoClientSettings settings = MongoClientSettings.FromUrl(
+              new MongoUrl(connectionString)
+            );
+            settings.SslSettings =
+              new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
 
+            CosmosClient = new MongoClient(settings);
+            MongoDatabase = CosmosClient.GetDatabase("admin");
+            MongoCollection = MongoDatabase.GetCollection<BsonDocument>("ComputerVisionPictures");
+        }
+        public void AddJson(JObject jObject)
+        {
+            BsonDocument bsonElements = BsonDocument.Parse(jObject.ToString());
+            MongoCollection.InsertOne(bsonElements);
+        }
         public class Entity
         {
             public ObjectId _id { get; set; }
@@ -29,7 +38,7 @@ namespace App1
         {
             string connectionString =
             @"insert your thing";
-            MongoClientSettings settings = MongoClientSettings.FromUrl(
+           MongoClientSettings settings = MongoClientSettings.FromUrl(
               new MongoUrl(connectionString)
             );
             settings.SslSettings =
@@ -50,6 +59,11 @@ namespace App1
 
             return "";
         }
+
+        MongoClient CosmosClient { get; set; }
+        IMongoDatabase MongoDatabase { get; set; }
+        IMongoCollection<BsonDocument> MongoCollection { get; set; }
+
 
     }
 }

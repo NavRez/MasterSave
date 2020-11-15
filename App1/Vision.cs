@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Microsoft.ProjectOxford.Vision;
-using Microsoft.ProjectOxford.Vision.Contract;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Plugin.Media.Abstractions;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
@@ -22,11 +10,10 @@ namespace App1
 {
     class Vision
     {
-        public Vision() { ; }
-
         public Vision(string mediaFile)
         {
             photo = mediaFile;
+            imageFilePath = @"" + photo;
         }
         public void LoadJson()
         {
@@ -35,7 +22,7 @@ namespace App1
         }
 
         // Add your Computer Vision subscription key and endpoint to your environment variables.
-        static string subscriptionKey = "";
+        static string subscriptionKey = "enter sub key";
 
         // An endpoint should have a format like "https://westus.api.cognitive.microsoft.com"
         static string endpoint = "https://visiontest424.cognitiveservices.azure.com/";
@@ -44,7 +31,9 @@ namespace App1
         static string uriBase = endpoint + "/vision/v3.1/read/analyze";
 
         // Add a local image with text here (png or jpg is OK)
-        static string imageFilePath = @"C:\\Users\\Navid\\Pictures\\test.PNG";
+        static string imageFilePath;
+
+        static CosmosAccess cosmosAccess = new CosmosAccess();
 
         /// <summary>
         /// Gets the text from the specified image file by using
@@ -103,6 +92,7 @@ namespace App1
                     // Display the JSON error data.
                     string errorString = await response.Content.ReadAsStringAsync();
                     JObject error = JObject.Parse(errorString);
+                    cosmosAccess.AddJson(error);
                     Console.WriteLine("\n\nResponse:\n{0}\n",
                         JToken.Parse(errorString).ToString());
                     return;
@@ -136,6 +126,7 @@ namespace App1
 
                 // Display the JSON response.
                 JObject complete = JObject.Parse(contentString);
+                cosmosAccess.AddJson(complete);
                 Console.WriteLine("\nResponse:\n\n{0}\n",
                     JToken.Parse(contentString).ToString());
             }
@@ -163,7 +154,7 @@ namespace App1
         }
 
 
-        private string photo;
+        private static string photo;
 
     }
 }
