@@ -45,11 +45,10 @@ namespace App1
         public void OnToast(View view)
         {
 
-           var hello = CosmosAccess.Test();
+           var hello = CosmosAccess.RetrieveDict();
            Vision vision = new Vision();
            vision.LoadImage();
 
-           Toast.MakeText(Android.App.Application.Context, hello, ToastLength.Long).Show();
         }
         public void OnCamera(Object sender, EventArgs e)
         {

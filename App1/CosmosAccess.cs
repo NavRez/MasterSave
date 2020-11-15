@@ -25,31 +25,59 @@ namespace App1
             public ObjectId _id { get; set; }
             public string Name { get; set; }
         }
-        public static string Test()
+        public static Dictionary<string, BsonValue> RetrieveDict()
         {
-            string connectionString =
-            @"insert your thing";
+            string connectionString = @"mongodb://sara:rHFncA47vQfBGVYmZgIn6Q0Epc5gbdLvNYPvx6jwSP20cy65D2qQpzMWFgzRIOp1FHTfotmgfkqvgzeETkclZQ==@sara.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@sara@";
+            //connectionString is the mongodb address from azure you should put
             MongoClientSettings settings = MongoClientSettings.FromUrl(
               new MongoUrl(connectionString)
             );
-            settings.SslSettings =
-              new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            //same for the settings
 
             var mongoClient = new MongoClient(settings);
-            var dbList = mongoClient.ListDatabases();
             IMongoDatabase db = mongoClient.GetDatabase("admin");
+            //name of my database
 
-            var collList = db.ListCollections().ToList();
-            Console.WriteLine("The list of collections are :");
+            var sample = db.GetCollection<BsonDocument>("sara");
+            //name of my collection
+            var documents = sample.Find(new BsonDocument()).FirstOrDefault();
+            var dictionary = new Dictionary<string, BsonValue>();
 
-            var collection = db.GetCollection<Entity>("entities");
+            Recurse(documents, dictionary);
 
-            var entity = new Entity { Name = "Tom" };
-            collection.InsertOneAsync(entity);
-            var id = entity._id;
+            Console.WriteLine("The list of databases are:");
 
-            return "";
+            //foreach (BsonDocument doc in documents)
+            //{
+            //    Console.WriteLine(doc.ToString());
+            //}
+            return dictionary;
+           
         }
+
+
+        //https://stackoverflow.com/questions/39024541/how-to-convert-mongo-document-into-key-value-pair-in-net
+
+        private static void Recurse(BsonDocument doc, Dictionary<string, BsonValue> dictionary)
+        {
+            foreach (var elm in doc.Elements)
+            {
+                if (!elm.Value.IsBsonDocument)
+                {
+                    if (!dictionary.ContainsKey(elm.Name))
+                    {
+                        dictionary.Add(elm.Name, elm.Value);
+                    }
+                }
+                else
+                {
+                    Recurse((elm.Value as BsonDocument), dictionary);
+                }
+            }
+        }
+
+
 
     }
 }
