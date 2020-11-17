@@ -45,12 +45,13 @@ namespace App1
         public void OnToast(View view)
         {
 
-           var hello = CosmosAccess.RetrieveDict();
+           //var hello = CosmosAccess.RetrieveDict();
 
 
         }
         public void OnCamera(Object sender, EventArgs e)
         {
+            Toast.MakeText(BaseContext.ApplicationContext, "Opening Camera...", ToastLength.Short);
             cameraButton.SetBackgroundColor(Android.Graphics.Color.DeepPink);
             var NxtAct = new Intent(this, typeof(CameraActivity));
             StartActivity(NxtAct);
@@ -58,6 +59,7 @@ namespace App1
 
         public void OnCalendar(Object sender, EventArgs e)
         {
+            Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
             var NxtAct = new Intent(this, typeof(CalendarActivity));
             StartActivity(NxtAct);
         }
