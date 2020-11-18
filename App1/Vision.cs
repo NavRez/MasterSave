@@ -22,7 +22,7 @@ namespace App1
         }
 
         // Add your Computer Vision subscription key and endpoint to your environment variables.
-        static string subscriptionKey = "enter sub key";
+        static string subscriptionKey = "c6f871c976094ecabb09c50ceedcb9cb";
 
         // An endpoint should have a format like "https://westus.api.cognitive.microsoft.com"
         static string endpoint = "https://visiontest424.cognitiveservices.azure.com/";
@@ -120,7 +120,7 @@ namespace App1
 
                 if (i == 60 && contentString.IndexOf("\"status\":\"succeeded\"") == -1)
                 {
-                    //Console.WriteLine("\nTimeout error.\n");
+                    Console.WriteLine("\nTimeout error.\n");
                     return;
                 }
 
@@ -132,7 +132,7 @@ namespace App1
             }
             catch (Exception e)
             {
-                //Console.WriteLine("\n" + e.Message);
+                Console.WriteLine("\n" + e.Message);
             }
         }
 

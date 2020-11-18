@@ -28,11 +28,6 @@ namespace App1
             cameraButton = (ImageButton)FindViewById(Resource.Id.cameraButton);
             cameraButton.Click += OnCamera;
 
-            /*System.Threading.Tasks.Task.Run(() =>
-            {
-                relativeLayout = (RelativeLayout)FindViewById(Resource.Id.mainActivityLayout);
-                relativeLayout.
-            });*/
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

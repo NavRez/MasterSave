@@ -18,6 +18,8 @@ namespace App1
 
         public CosmosAccess()
         {
+            TextsList = new List<List<string>>();
+
             string connectionString = @"mongodb://sara:rHFncA47vQfBGVYmZgIn6Q0Epc5gbdLvNYPvx6jwSP20cy65D2qQpzMWFgzRIOp1FHTfotmgfkqvgzeETkclZQ==@sara.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@sara@";
             //connectionString is the mongodb address from azure you should put
             MongoClientSettings settings = MongoClientSettings.FromUrl(
@@ -28,6 +30,7 @@ namespace App1
 
             CosmosClient = new MongoClient(settings);
             MongoDatabase = CosmosClient.GetDatabase("admin");
+            MongoCollection = MongoDatabase.GetCollection<BsonDocument>("sara");
             //name of my database
         }
 
@@ -38,12 +41,11 @@ namespace App1
         }
         public Dictionary<string, BsonValue> RetrieveDict()
         {
-            var sample = MongoDatabase.GetCollection<BsonDocument>("sara");
             //name of my collection
-            var documents = sample.Find(new BsonDocument()).ToList();
+            var documents = MongoCollection.Find(new BsonDocument()).ToList();
             var dictionary = new Dictionary<string, BsonValue>();
 
-            List<Dictionary<string,BsonValue>> dictList = new List<Dictionary<string, BsonValue>>();
+            List<Dictionary<string, BsonValue>> dictList = new List<Dictionary<string, BsonValue>>();
 
             foreach (BsonDocument bsons in documents)
             {
@@ -51,24 +53,38 @@ namespace App1
                 Recurse(bsons, internalDict);
                 dictList.Add(internalDict);
 
-                if (dictList.Count == 4)
-                {
-                    var valTest = dictList[3]["readResults"][0]["lines"][0]["text"].RawValue;
-                    int i = 1;
-                    while (true)
-                    {
-                        try
-                        {
-                            var valTest1 = dictList[3]["readResults"][0]["lines"][i++]["text"].RawValue;
+            }
 
-                        }
-                        catch(Exception e)
+            //var valTest = dictList[3]["readResults"][0]["lines"][0]["text"].RawValue;
+            int i = 0;
+
+            foreach (Dictionary<string, BsonValue> keyValuePairs in dictList)
+            {
+                List<string> simplifiedDict = new List<string>();
+                while (true)
+                {
+                    try
+                    {
+                        if (i == 0)
                         {
-                            break;
+                            var dateTime = keyValuePairs["createdDateTime"].RawValue;
+                            simplifiedDict.Add((string)dateTime);
                         }
-                                            }
+                        var valTest = keyValuePairs["readResults"][0]["lines"][i++]["text"].RawValue;
+                        simplifiedDict.Add((string)valTest);
+
+                    }
+                    catch (Exception e)
+                    {
+                        TextsList.Add(simplifiedDict);
+                        i = 0;
+                        break;
+                    }
                 }
             }
+
+
+
 
             //Console.WriteLine("The list of databases are:");
 
@@ -77,7 +93,7 @@ namespace App1
             //    Console.WriteLine(doc.ToString());
             //}
             return (dictionary = dictList.ElementAt<Dictionary<string, BsonValue>>(0));
-           
+
         }
 
 
@@ -104,6 +120,8 @@ namespace App1
         MongoClient CosmosClient { get; set; }
         IMongoDatabase MongoDatabase { get; set; }
         IMongoCollection<BsonDocument> MongoCollection { get; set; }
+
+        public List<List<string>> TextsList { get; set; }
 
 
     }

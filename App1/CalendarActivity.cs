@@ -49,7 +49,31 @@ namespace App1
             Event newEvent2 = new Event("Walk to work", start, end);
             newEvent2.EventColor = Android.Graphics.Color.Green;
 
+            calendar.Add(CalendarField.Hour, 1);
+
+            string answer ="";
             IList<Event> events = new List<Event>();
+
+            foreach (List<string> lister in cosmosAccess.TextsList)
+            {
+                if (lister.Count != 0)
+                {
+                    foreach (string stringList in lister)
+                    {
+                        start = calendar.TimeInMillis;
+                        calendar.Add(CalendarField.Minute, 1);
+                        answer = stringList;
+                        end = calendar.TimeInMillis;
+                        Event newEvent3 = new Event(answer, start, end);
+                        newEvent3.EventColor = Android.Graphics.Color.Red;
+                        events.Add(newEvent3);
+                    }
+                }
+              
+            }
+            
+
+
             events.Add(newEvent);
             events.Add(newEvent2);
 
