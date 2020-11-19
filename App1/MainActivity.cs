@@ -14,6 +14,7 @@ namespace App1
     {
         ImageButton cameraButton;
         ImageButton calenderButton;
+        ImageButton settingButton;
         RelativeLayout relativeLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,6 +28,9 @@ namespace App1
 
             cameraButton = (ImageButton)FindViewById(Resource.Id.cameraButton);
             cameraButton.Click += OnCamera;
+
+            settingButton = (ImageButton)FindViewById(Resource.Id.settingsbutton);
+            settingButton.Click += OnSettings;
 
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -56,6 +60,13 @@ namespace App1
         {
             Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
             var NxtAct = new Intent(this, typeof(CalendarActivity));
+            StartActivity(NxtAct);
+        }
+
+        public void OnSettings(Object sender, EventArgs e)
+        {
+            Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
+            var NxtAct = new Intent(this, typeof(SettingsActivity));
             StartActivity(NxtAct);
         }
 

@@ -64,9 +64,9 @@ namespace App1
                         calendar.Add(CalendarField.Minute, 1);
                         answer = stringList;
                         end = calendar.TimeInMillis;
-                        Event newEvent3 = new Event(answer, start, end);
-                        newEvent3.EventColor = Android.Graphics.Color.Red;
-                        events.Add(newEvent3);
+                        Event nEvent = new Event(answer, start, end);
+                        nEvent.EventColor = Android.Graphics.Color.Red;
+                        events.Add(nEvent);
                     }
                 }
               
