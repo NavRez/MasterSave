@@ -33,8 +33,7 @@ namespace App1
 
         public void OnSubmit(object sender, EventArgs e)
         {
-            string b = month.Text;
-            int a = 0;
+            SettingsHelper.ConvertVals(day.Text, month.Text, year.Text);
         }
     }
 }
