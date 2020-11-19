@@ -33,9 +33,11 @@ namespace App1
             calendarView.SelectionMode = CalendarSelectionMode.Single;
 
             Calendar calendar = Java.Util.Calendar.Instance;
+            Date date;
             long start = calendar.TimeInMillis;
-            int year = calendar.Time.Year;
-            int month = calendar.Time.Month;
+            int year = SettingsHelper.Year;
+            int month = SettingsHelper.Month;
+            int day = SettingsHelper.Day;
             string snippetTime = String.Format("{0}-{1}", year.ToString(), month.ToString());
             calendar.Add(CalendarField.Hour, 3);
             long end = calendar.TimeInMillis;
@@ -58,8 +60,26 @@ namespace App1
             {
                 if (lister.Count != 0)
                 {
+                    int seCount = 0;
                     foreach (string stringList in lister)
                     {
+                        if (seCount == 0)
+                        {
+                            string[] time = stringList.Split("T");
+                            if (time.Length == 2)
+                            {
+                                string[] dateTimes = time[0].Split("-");
+                                date = new Date(Int32.Parse(dateTimes[0])-1900, (Int32.Parse(dateTimes[1])-1), Int32.Parse(dateTimes[2]));
+                                calendar.Time = date;//  .setTime(date);
+                                seCount++;
+                            }
+                            else
+                            {
+                                seCount++;
+                            }
+                        }
+                        
+
                         start = calendar.TimeInMillis;
                         calendar.Add(CalendarField.Minute, 1);
                         answer = stringList;
@@ -68,6 +88,7 @@ namespace App1
                         nEvent.EventColor = Android.Graphics.Color.Red;
                         events.Add(nEvent);
                     }
+
                 }
               
             }
