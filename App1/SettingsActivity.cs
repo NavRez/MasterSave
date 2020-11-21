@@ -28,6 +28,7 @@ namespace App1
         public void OnSubmit(object sender, EventArgs e)
         {
             SettingsHelper.ConvertVals(day.Text, month.Text, year.Text);
+            OnBackPressed();
         }
     }
 }

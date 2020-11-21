@@ -58,6 +58,7 @@ namespace App1
 
             foreach (List<string> lister in cosmosAccess.TextsList)
             {
+                int[] dates = new int[3];
                 if (lister.Count != 0)
                 {
                     int seCount = 0;
@@ -69,6 +70,10 @@ namespace App1
                             if (time.Length == 2)
                             {
                                 string[] dateTimes = time[0].Split("-");
+                                dates[0] = Int32.Parse(dateTimes[0]);
+                                dates[1] = Int32.Parse(dateTimes[1]) - 1;
+                                dates[2] = Int32.Parse(dateTimes[2]);
+
                                 date = new Date(Int32.Parse(dateTimes[0])-1900, (Int32.Parse(dateTimes[1])-1), Int32.Parse(dateTimes[2]));
                                 calendar.Time = date;//  .setTime(date);
                                 seCount++;
@@ -78,15 +83,35 @@ namespace App1
                                 seCount++;
                             }
                         }
-                        
+                        Event nEvent;
+                        if (SettingsHelper.Day == 0)
+                        {
+                            if(dates[0] == SettingsHelper.Year && ((dates[1]+1) == SettingsHelper.Month))
+                            {
+                                start = calendar.TimeInMillis;
+                                calendar.Add(CalendarField.Minute, 1);
+                                answer = stringList;
+                                end = calendar.TimeInMillis;
+                                nEvent = new Event(answer, start, end);
+                                nEvent.EventColor = Android.Graphics.Color.Red;
+                                events.Add(nEvent);
+                            }
 
-                        start = calendar.TimeInMillis;
-                        calendar.Add(CalendarField.Minute, 1);
-                        answer = stringList;
-                        end = calendar.TimeInMillis;
-                        Event nEvent = new Event(answer, start, end);
-                        nEvent.EventColor = Android.Graphics.Color.Red;
-                        events.Add(nEvent);
+                        }
+                        else
+                        {
+                            if (dates[0] == SettingsHelper.Year && ((dates[1] + 1) == SettingsHelper.Month) && dates[2] == SettingsHelper.Day)
+                            {
+                                start = calendar.TimeInMillis;
+                                calendar.Add(CalendarField.Minute, 1);
+                                answer = stringList;
+                                end = calendar.TimeInMillis;
+                                nEvent = new Event(answer, start, end);
+                                nEvent.EventColor = Android.Graphics.Color.Red;
+                                events.Add(nEvent);
+                            }
+                        }
+
                     }
 
                 }

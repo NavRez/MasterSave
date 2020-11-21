@@ -28,11 +28,11 @@ namespace App1
             Day = GetDay(d);
             Year = GetYear(y);
 
-            if (Day == 0 || Month == 0 || Year == 0)
+            if (Month == 0 || Year == 0)
             {
                 Day = 0;
-                Month = internalCal.Time.Month;
-                Year = internalCal.Time.Year;
+                Month = internalCal.Time.Month + 1;
+                Year = internalCal.Time.Year + 1900;
             }
             
         }
