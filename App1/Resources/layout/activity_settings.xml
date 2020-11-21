@@ -6,26 +6,31 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px"
-    android:background="@android:color/holo_blue_light">
+    android:background="@android:color/holo_green_light">
 
     <EditText
-        android:layout_width="260.5dp"
-        android:layout_height="wrap_content"
+        android:layout_width="377.0dp"
+        android:layout_height="69.5dp"
         android:inputType="numberSigned"
         android:hint="Enter the desired day (Optional)"
-        android:id="@+id/dayText"/>
+        android:id="@+id/dayText"
+        android:layout_marginBottom="30.5dp"
+        android:layout_marginTop="48.5dp" />
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="377.5dp"
+        android:layout_height="58.5dp"
         android:inputType="textLongMessage"
         android:hint="Enter the desired Month"
-        android:id="@+id/monthText"/>
+        android:id="@+id/monthText"
+        android:layout_marginBottom="23.0dp" />
     <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="380.5dp"
+        android:layout_height="44.5dp"
         android:inputType="numberSigned"
         android:hint="Enter Year"
-        android:id="@+id/yearText"/>
+        android:id="@+id/yearText"
+        android:layout_marginBottom="31.5dp"
+        android:layout_marginTop="13.0dp" />
     <Button
         android:text="Submit"
         android:layout_width="match_parent"
