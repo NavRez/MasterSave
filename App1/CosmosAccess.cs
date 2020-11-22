@@ -19,6 +19,7 @@ namespace App1
         public CosmosAccess()
         {
             TextsList = new List<List<string>>();
+            CashList = new List<List<string>>();
 
             string connectionString = @"mongodb://sara:rHFncA47vQfBGVYmZgIn6Q0Epc5gbdLvNYPvx6jwSP20cy65D2qQpzMWFgzRIOp1FHTfotmgfkqvgzeETkclZQ==@sara.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@sara@";
             //connectionString is the mongodb address from azure you should put
@@ -61,6 +62,7 @@ namespace App1
             foreach (Dictionary<string, BsonValue> keyValuePairs in dictList)
             {
                 List<string> simplifiedDict = new List<string>();
+                List<string> simplifiedCashDict = new List<string>();
                 while (true)
                 {
                     try
@@ -69,14 +71,23 @@ namespace App1
                         {
                             var dateTime = keyValuePairs["createdDateTime"].RawValue;
                             simplifiedDict.Add((string)dateTime);
+                            simplifiedCashDict.Add((string)dateTime);
+                            
                         }
                         var valTest = keyValuePairs["readResults"][0]["lines"][i++]["text"].RawValue;
                         simplifiedDict.Add((string)valTest);
-
+                        if (valTest.ToString().Contains("$"))
+                        {
+                            simplifiedCashDict.Add((string)valTest);
+                        }
                     }
                     catch (Exception e)
                     {
                         TextsList.Add(simplifiedDict);
+                        if (simplifiedCashDict.Count <= 1)
+                        {
+                            CashList.Add(simplifiedCashDict);
+                        }
                         i = 0;
                         break;
                     }
@@ -122,6 +133,7 @@ namespace App1
         IMongoCollection<BsonDocument> MongoCollection { get; set; }
 
         public List<List<string>> TextsList { get; set; }
+        public List<List<string>> CashList { get; set; }
 
 
     }
