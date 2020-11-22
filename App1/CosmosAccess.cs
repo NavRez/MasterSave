@@ -58,7 +58,7 @@ namespace App1
 
             //var valTest = dictList[3]["readResults"][0]["lines"][0]["text"].RawValue;
             int i = 0;
-
+            bool total = false;
             foreach (Dictionary<string, BsonValue> keyValuePairs in dictList)
             {
                 List<string> simplifiedDict = new List<string>();
@@ -72,19 +72,31 @@ namespace App1
                             var dateTime = keyValuePairs["createdDateTime"].RawValue;
                             simplifiedDict.Add((string)dateTime);
                             simplifiedCashDict.Add((string)dateTime);
+                            total = false;
                             
                         }
                         var valTest = keyValuePairs["readResults"][0]["lines"][i++]["text"].RawValue;
                         simplifiedDict.Add((string)valTest);
-                        if (valTest.ToString().Contains("$"))
+                        string simpVal = valTest.ToString();
+                        if (simpVal.Contains("$"))
                         {
-                            simplifiedCashDict.Add((string)valTest);
+                            simplifiedCashDict.Add(RemoveSpecialCharacters((string)valTest));
+                            total = false;
+                        }
+                        else if (simpVal.Contains("TOTAL") || simpVal.Contains("Total"))
+                        {
+                            total = true;
+                        }
+                        else if (total)
+                        {
+                            simplifiedCashDict.Add(RemoveSpecialCharacters((string)valTest));
+                            total = false;
                         }
                     }
                     catch (Exception e)
                     {
                         TextsList.Add(simplifiedDict);
-                        if (simplifiedCashDict.Count <= 1)
+                        if (simplifiedCashDict.Count > 1)
                         {
                             CashList.Add(simplifiedCashDict);
                         }
@@ -126,6 +138,26 @@ namespace App1
                     Recurse((elm.Value as BsonDocument), dictionary);
                 }
             }
+        }
+
+        public static string RemoveSpecialCharacters(string str)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in str)
+            {
+                if ((c >= '0' && c <= '9') || c == '.' || c == ',')
+                {
+                    if (c != ',')
+                    {
+                        sb.Append(c);
+                    }
+                    else
+                    {
+                        sb.Append('.');
+                    }
+                }
+            }
+            return sb.ToString();
         }
 
         MongoClient CosmosClient { get; set; }
