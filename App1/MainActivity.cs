@@ -50,7 +50,11 @@ namespace App1
         }
         public void OnCamera(Object sender, EventArgs e)
         {
-            Toast.MakeText(BaseContext.ApplicationContext, "Opening Camera...", ToastLength.Short);
+            var context = Android.App.Application.Context;
+            var tostMessage = String.Format("Opening Camera");
+            var durtion = ToastLength.Long;
+            Toast.MakeText(context, tostMessage, durtion).Show();
+
             cameraButton.SetBackgroundColor(Android.Graphics.Color.DeepPink);
             var NxtAct = new Intent(this, typeof(CameraActivity));
             StartActivity(NxtAct);
@@ -58,14 +62,19 @@ namespace App1
 
         public void OnCalendar(Object sender, EventArgs e)
         {
-            Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
+            var context = Android.App.Application.Context;
+            var tostMessage = String.Format("Now Showing Calendar");
+            var durtion = ToastLength.Long;
+            Toast.MakeText(context, tostMessage, durtion).Show();
+
             var NxtAct = new Intent(this, typeof(CalendarActivity));
             StartActivity(NxtAct);
         }
 
         public void OnSettings(Object sender, EventArgs e)
         {
-            Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
+            var context = Android.App.Application.Context;
+            Toast.MakeText(context, "Opening Settings", ToastLength.Short);
             var NxtAct = new Intent(this, typeof(SettingsActivity));
             StartActivity(NxtAct);
         }
