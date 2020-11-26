@@ -27,6 +27,7 @@ namespace App1
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.activity_calendar);
 
+            
             var temp = cosmosAccess.RetrieveDict();
 
             RadCalendarView calendarView = (RadCalendarView)FindViewById(Resource.Id.calendarView);
@@ -41,27 +42,31 @@ namespace App1
             string snippetTime = String.Format("{0}-{1}", year.ToString(), month.ToString());
             calendar.Add(CalendarField.Hour, 3);
             long end = calendar.TimeInMillis;
-            Event newEvent = new Event(temp["sample1"].ToString(), start, end);
-            //temp.["sample1"] is the key in the collection 
+            //Event newEvent = new Event(temp["sample1"].ToString(), start, end);
+            ////temp.["sample1"] is the key in the collection 
 
-            calendar.Add(CalendarField.Hour, 1);
-            start = calendar.TimeInMillis;
-            calendar.Add(CalendarField.Hour, 1);
-            end = calendar.TimeInMillis;
-            Event newEvent2 = new Event("Walk to work", start, end);
-            newEvent2.EventColor = Android.Graphics.Color.Green;
+            //calendar.Add(CalendarField.Hour, 1);
+            //start = calendar.TimeInMillis;
+            //calendar.Add(CalendarField.Hour, 1);
+            //end = calendar.TimeInMillis;
+            //Event newEvent2 = new Event("Walk to work", start, end);
+            //newEvent2.EventColor = Android.Graphics.Color.Green;
 
-            calendar.Add(CalendarField.Hour, 1);
+            //calendar.Add(CalendarField.Hour, 1);
 
             string answer ="";
             IList<Event> events = new List<Event>();
-
-            foreach (List<string> lister in cosmosAccess.TextsList)
+            int counter = 0;
+            float totalSpend = 0;
+            foreach (List<string> lister in cosmosAccess.CashList)
             {
                 int[] dates = new int[3];
                 if (lister.Count != 0)
                 {
                     int seCount = 0;
+                    float tempValue = 0;
+                    float currBill = 0;
+                    Event nEvent;
                     foreach (string stringList in lister)
                     {
                         if (seCount == 0)
@@ -83,18 +88,32 @@ namespace App1
                                 seCount++;
                             }
                         }
-                        Event nEvent;
+
                         if (SettingsHelper.Day == 0)
                         {
                             if(dates[0] == SettingsHelper.Year && ((dates[1]+1) == SettingsHelper.Month))
                             {
-                                start = calendar.TimeInMillis;
+                                try
+                                {
+                                    tempValue = float.Parse(stringList, System.Globalization.CultureInfo.InvariantCulture);
+                                    if (currBill <= tempValue)
+                                    {
+                                        currBill = tempValue;
+                                        answer = stringList;
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    ;
+                                }
+
+                                /*start = calendar.TimeInMillis;
                                 calendar.Add(CalendarField.Minute, 1);
                                 answer = stringList;
                                 end = calendar.TimeInMillis;
                                 nEvent = new Event(answer, start, end);
                                 nEvent.EventColor = Android.Graphics.Color.Red;
-                                events.Add(nEvent);
+                                events.Add(nEvent);*/
                             }
 
                         }
@@ -102,26 +121,50 @@ namespace App1
                         {
                             if (dates[0] == SettingsHelper.Year && ((dates[1] + 1) == SettingsHelper.Month) && dates[2] == SettingsHelper.Day)
                             {
-                                start = calendar.TimeInMillis;
+                                try
+                                {
+                                    tempValue = float.Parse(stringList, System.Globalization.CultureInfo.InvariantCulture);
+                                    if (currBill <= tempValue)
+                                    {
+                                        currBill = tempValue;
+                                        answer = stringList;
+                                    }
+                                }
+                                catch(Exception e)
+                                {
+                                    ;
+                                }
+
+
+                                /*start = calendar.TimeInMillis;
                                 calendar.Add(CalendarField.Minute, 1);
                                 answer = stringList;
                                 end = calendar.TimeInMillis;
                                 nEvent = new Event(answer, start, end);
                                 nEvent.EventColor = Android.Graphics.Color.Red;
-                                events.Add(nEvent);
+                                events.Add(nEvent);*/
                             }
                         }
 
                     }
 
+                    start = calendar.TimeInMillis;
+                    calendar.Add(CalendarField.Minute, 1);
+                    end = calendar.TimeInMillis;
+                    nEvent = new Event(String.Format("Bill {0} : {1}$",++counter,answer), start, end);
+                    nEvent.EventColor = Android.Graphics.Color.LimeGreen;
+                    events.Add(nEvent);
+                    totalSpend += currBill;
                 }
               
             }
-            
 
-
-            events.Add(newEvent);
-            events.Add(newEvent2);
+            counter = 0;
+            calendar = Java.Util.Calendar.Instance;
+            calendar.Add(CalendarField.Minute, 1);
+            events.Add(new Event(String.Format("Total so far : {0}$", totalSpend), start, end));
+            //events.Add(newEvent);
+            //events.Add(newEvent2);
 
             calendarView.EventAdapter.Events = events;
             calendarView.EventsDisplayMode = EventsDisplayMode.Popup;

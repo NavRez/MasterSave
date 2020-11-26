@@ -10,7 +10,7 @@ using Android.Content;
 namespace App1
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
-    public class MainActivity : Activity
+    public class MainActivity : AppCompatActivity
     {
         ImageButton cameraButton;
         ImageButton calenderButton;
@@ -63,18 +63,18 @@ namespace App1
         public void OnCalendar(Object sender, EventArgs e)
         {
             var context = Android.App.Application.Context;
-            var tostMessage = String.Format("Opening Calendar , Please wait ...");
+            var tostMessage = String.Format("Now Showing Calendar");
             var durtion = ToastLength.Long;
             Toast.MakeText(context, tostMessage, durtion).Show();
 
-            Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
             var NxtAct = new Intent(this, typeof(CalendarActivity));
             StartActivity(NxtAct);
         }
 
         public void OnSettings(Object sender, EventArgs e)
         {
-            Toast.MakeText(BaseContext.ApplicationContext, "Opening Calendar...", ToastLength.Short);
+            var context = Android.App.Application.Context;
+            Toast.MakeText(context, "Opening Settings", ToastLength.Short);
             var NxtAct = new Intent(this, typeof(SettingsActivity));
             StartActivity(NxtAct);
         }

@@ -53,6 +53,7 @@ namespace App1
                 photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions 
                 { 
                     Directory = "MasterSaveReceipts",
+                    CompressionQuality = 60,
                     Name = name
                 
                 });
