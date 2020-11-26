@@ -22,7 +22,7 @@ namespace App1
         }
 
         // Add your Computer Vision subscription key and endpoint to your environment variables.
-        static string subscriptionKey = "09959282ddd24613aa8726f8786c23ee";
+        static string subscriptionKey = "7c43877095ee4c2d9f93a14cf35d8cc6";
 
         // An endpoint should have a format like "https://westus.api.cognitive.microsoft.com"
         static string endpoint = "https://visiontest424.cognitiveservices.azure.com/";

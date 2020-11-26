@@ -31,13 +31,13 @@ namespace App1
             var context = Android.App.Application.Context;
             if (SettingsHelper.Day == 0)
             {
-                var tostMessage = String.Format("Date set to mm:yyyy : {0}-{1}", SettingsHelper.Month.ToString(), SettingsHelper.Year.ToString());
+                var tostMessage = String.Format("Date set to mm:yyyy : {0}-{1}", SettingsHelper.Month, SettingsHelper.Year);
                 var durtion = ToastLength.Long;
                 Toast.MakeText(context, tostMessage, durtion).Show();
             }
             else
             {
-                var tostMessage = String.Format("Date set to dd:mm:yyyy : {0}:{1}:{2}", SettingsHelper.Day.ToString(), SettingsHelper.Month.ToString(), SettingsHelper.Year.ToString());
+                var tostMessage = String.Format("Date set to dd:mm:yyyy : {0}:{1}:{2}", SettingsHelper.Day, SettingsHelper.Month, SettingsHelper.Year);
                 var durtion = ToastLength.Long;
                 Toast.MakeText(context, tostMessage, durtion).Show();
             }
