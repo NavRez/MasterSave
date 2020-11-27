@@ -6,6 +6,7 @@ using Android.Widget;
 using Android.Views;
 using System;
 using Android.Content;
+using Android.Graphics.Drawables;
 
 namespace App1
 {
@@ -22,6 +23,12 @@ namespace App1
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
+
+            relativeLayout = (RelativeLayout)FindViewById(Resource.Id.mainActivityLayout);
+            AnimationDrawable animationDrawable = (AnimationDrawable)relativeLayout.Background;
+            animationDrawable.SetEnterFadeDuration(2000);
+            animationDrawable.SetExitFadeDuration(4000);
+            animationDrawable.Start();
 
             calenderButton = (ImageButton)FindViewById(Resource.Id.calendarButton);
             calenderButton.Click += OnCalendar;

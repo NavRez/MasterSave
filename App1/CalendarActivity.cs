@@ -1,20 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Com.Telerik.Widget.Calendar;
 using Com.Telerik.Widget.Calendar.Events;
 using Java.Util;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using MongoDB.Driver.Core;
 
 namespace App1
 {
