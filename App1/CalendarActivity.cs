@@ -58,6 +58,7 @@ namespace App1
             IList<Event> events = new List<Event>();
             int counter = 0;
             float totalSpend = 0;
+
             foreach (List<string> lister in cosmosAccess.CashList)
             {
                 int[] dates = new int[3];
@@ -67,6 +68,7 @@ namespace App1
                     float tempValue = 0;
                     float currBill = 0;
                     Event nEvent;
+                    bool printSum = false;
                     foreach (string stringList in lister)
                     {
                         if (seCount == 0)
@@ -100,11 +102,12 @@ namespace App1
                                     {
                                         currBill = tempValue;
                                         answer = stringList;
+                                        printSum = true;
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    ;
+                                   
                                 }
 
                                 /*start = calendar.TimeInMillis;
@@ -114,6 +117,10 @@ namespace App1
                                 nEvent = new Event(answer, start, end);
                                 nEvent.EventColor = Android.Graphics.Color.Red;
                                 events.Add(nEvent);*/
+                            }
+                            else
+                            {
+                                printSum = false;
                             }
 
                         }
@@ -128,11 +135,12 @@ namespace App1
                                     {
                                         currBill = tempValue;
                                         answer = stringList;
+                                        printSum = true;
                                     }
                                 }
                                 catch(Exception e)
                                 {
-                                    ;
+                                    
                                 }
 
 
@@ -144,24 +152,46 @@ namespace App1
                                 nEvent.EventColor = Android.Graphics.Color.Red;
                                 events.Add(nEvent);*/
                             }
+                            else
+                            {
+                                printSum = false;
+                            }
                         }
 
                     }
+                    if (printSum)
+                    {
+                        start = calendar.TimeInMillis;
+                        calendar.Add(CalendarField.Minute, 1);
+                        end = calendar.TimeInMillis;
+                        nEvent = new Event(String.Format("Bill {0} : {1}$", ++counter, answer), start, end);
+                        nEvent.EventColor = Android.Graphics.Color.LimeGreen;
+                        events.Add(nEvent);
+                        totalSpend += currBill;
 
-                    start = calendar.TimeInMillis;
-                    calendar.Add(CalendarField.Minute, 1);
-                    end = calendar.TimeInMillis;
-                    nEvent = new Event(String.Format("Bill {0} : {1}$",++counter,answer), start, end);
-                    nEvent.EventColor = Android.Graphics.Color.LimeGreen;
-                    events.Add(nEvent);
-                    totalSpend += currBill;
+                    }
                 }
               
             }
-
+            
             counter = 0;
-            calendar = Java.Util.Calendar.Instance;
-            calendar.Add(CalendarField.Minute, 1);
+            string tempMonth = SettingsHelper.Month.ToString();
+            string tempYear = SettingsHelper.Year.ToString();
+            SettingsHelper.ConvertVals("31", tempMonth, tempYear);
+            if (SettingsHelper.Day == 0)
+            {
+                SettingsHelper.ConvertVals("30", tempMonth, tempYear);
+                if(SettingsHelper.Day == 0)
+                {
+                    SettingsHelper.ConvertVals("28", tempMonth, tempYear);
+                }
+            }
+
+            
+            calendar.Time = new Date(SettingsHelper.Year - 1900, (SettingsHelper.Month - 1), SettingsHelper.Day);
+            start = calendar.TimeInMillis;
+            end = calendar.TimeInMillis;
+            calendar.Add(CalendarField.Hour, 7);
             events.Add(new Event(String.Format("Total so far : {0}$", totalSpend), start, end));
             //events.Add(newEvent);
             //events.Add(newEvent2);
