@@ -72,7 +72,29 @@ namespace App1
                                 dates[1] = Int32.Parse(dateTimes[1]) - 1;
                                 dates[2] = Int32.Parse(dateTimes[2]);
 
-                                date = new Date(Int32.Parse(dateTimes[0])-1900, (Int32.Parse(dateTimes[1])-1), Int32.Parse(dateTimes[2]));
+                                if (dates[2] == 1)
+                                {
+                                    dates[1] -= 1;
+
+                                    if (dates[1] == 1)
+                                    {
+                                        dates[2] = 28;
+                                    }
+                                    else if(dates[1] == 0 || dates[1] == 2 || dates[1] == 4 || dates[1] == 6 || dates[1] == 7 || dates[1] == 9 || dates[1] == 11)
+                                    {
+                                        dates[2] = 31; 
+                                    }
+                                    else
+                                    {
+                                        dates[2] = 30;
+                                    }
+                                }
+                                else
+                                {
+                                    dates[2] -= 1;
+                                }
+
+                                date = new Date(Int32.Parse(dateTimes[0])-1900, (dates[1]), dates[2]);
                                 calendar.Time = date;//  .setTime(date);
                                 seCount++;
                             }
