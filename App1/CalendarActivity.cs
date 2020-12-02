@@ -68,11 +68,13 @@ namespace App1
                             if (time.Length == 2)
                             {
                                 string[] dateTimes = time[0].Split("-");
+                                string[] clockTimes = time[1].Split(":");
+                                int timeCheck = Int32.Parse(clockTimes[0]) - 5;
                                 dates[0] = Int32.Parse(dateTimes[0]);
                                 dates[1] = Int32.Parse(dateTimes[1]) - 1;
                                 dates[2] = Int32.Parse(dateTimes[2]);
 
-                                if (dates[2] == 1)
+                                if (dates[2] == 1 && timeCheck < 0)
                                 {
                                     dates[1] -= 1;
 
@@ -89,7 +91,7 @@ namespace App1
                                         dates[2] = 30;
                                     }
                                 }
-                                else
+                                else if(timeCheck < 0)
                                 {
                                     dates[2] -= 1;
                                 }
