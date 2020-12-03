@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
 using Android.App;
+using Android.Graphics;
 using Android.OS;
 using Com.Telerik.Widget.Calendar;
 using Com.Telerik.Widget.Calendar.Events;
@@ -49,6 +49,8 @@ namespace App1
             IList<Event> events = new List<Event>();
             int counter = 0;
             float totalSpend = 0;
+            double tempSaving = 0;
+            //int tempCounter = 0;
 
             foreach (List<string> lister in cosmosAccess.CashList)
             {
@@ -59,6 +61,7 @@ namespace App1
                     float tempValue = 0;
                     float currBill = 0;
                     Event nEvent;
+                    Event sEvent;
                     bool printSum = false;
                     foreach (string stringList in lister)
                     {
@@ -179,9 +182,18 @@ namespace App1
                         start = calendar.TimeInMillis;
                         calendar.Add(CalendarField.Minute, 1);
                         end = calendar.TimeInMillis;
-                        nEvent = new Event(String.Format("Bill {0} : {1}$", ++counter, answer), start, end);
-                        nEvent.EventColor = Android.Graphics.Color.LimeGreen;
+                        SavingHelper.Cost = currBill;
+                        SavingHelper.ConvertBills(currBill.ToString());
+                        double saving = SavingHelper.Cost - currBill;
+                        saving = Math.Round(saving, 2);
+                        saving.ToString("0.00");
+                        nEvent = new Event(String.Format("Bill {0} : {1}$ , Saving : {2}$ ", ++counter, answer, saving), start, end);
+                        sEvent = new Event(String.Format(" Saving : {0}$ ", saving), start, end);
+                        nEvent.EventColor = Android.Graphics.Color.Blue;
+                        sEvent.EventColor = Android.Graphics.Color.Red;
                         events.Add(nEvent);
+                        events.Add(sEvent);
+                        tempSaving += SavingHelper.Cost;
                         totalSpend += currBill;
 
                     }
@@ -204,15 +216,20 @@ namespace App1
 
             
             calendar.Time = new Date(SettingsHelper.Year - 1900, (SettingsHelper.Month - 1), SettingsHelper.Day);
-            start = calendar.TimeInMillis;
+            start = calendar.TimeInMillis; 
             end = calendar.TimeInMillis;
             calendar.Add(CalendarField.Hour, 7);
-            events.Add(new Event(String.Format("Total so far : {0}$", totalSpend), start, end));
+            double tempTotal = tempSaving - totalSpend;
+            tempTotal = Math.Round(tempTotal, 2);
+            events.Add(new Event(String.Format("Total so far : {0}$ \r\n Total Saving : {1}$ ", totalSpend, tempTotal), start, end));
             //events.Add(newEvent);
             //events.Add(newEvent2);
 
             calendarView.EventAdapter.Events = events;
-            calendarView.EventsDisplayMode = EventsDisplayMode.Popup;
+            calendarView.EventsDisplayMode = EventsDisplayMode.Inline;
+            calendarView.Adapter.InlineEventTimeStartTextColor = Color.White;
+            calendarView.Adapter.InlineEventTimeEndTextColor = Color.White;
+            calendarView.Adapter.InlineEventsBackgroundColor = Color.White;
 
             // Create your application here
         }

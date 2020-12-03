@@ -16,7 +16,7 @@ namespace App1
         ImageButton cameraButton;
         ImageButton calenderButton;
         ImageButton settingButton;
-        RelativeLayout relativeLayout;
+        LinearLayout linearLayout;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -24,11 +24,12 @@ namespace App1
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
 
-            relativeLayout = (RelativeLayout)FindViewById(Resource.Id.mainActivityLayout);
-            AnimationDrawable animationDrawable = (AnimationDrawable)relativeLayout.Background;
-            animationDrawable.SetEnterFadeDuration(2000);
-            animationDrawable.SetExitFadeDuration(4000);
-            animationDrawable.Start();
+            linearLayout = (LinearLayout)FindViewById(Resource.Id.mainActivityLayout);
+            //relativeLayout = (RelativeLayout)FindViewById(Resource.Id.mainActivityLayout);
+            //AnimationDrawable animationDrawable = (AnimationDrawable)relativeLayout.Background;
+            //animationDrawable.SetEnterFadeDuration(2000);
+            //animationDrawable.SetExitFadeDuration(4000);
+            //animationDrawable.Start();
 
             calenderButton = (ImageButton)FindViewById(Resource.Id.calendarButton);
             calenderButton.Click += OnCalendar;
@@ -62,7 +63,6 @@ namespace App1
             var durtion = ToastLength.Long;
             Toast.MakeText(context, tostMessage, durtion).Show();
 
-            cameraButton.SetBackgroundColor(Android.Graphics.Color.DeepPink);
             var NxtAct = new Intent(this, typeof(CameraActivity));
             StartActivity(NxtAct);
         }
@@ -77,7 +77,6 @@ namespace App1
             var NxtAct = new Intent(this, typeof(CalendarActivity));
             StartActivity(NxtAct);
         }
-
         public void OnSettings(Object sender, EventArgs e)
         {
             var context = Android.App.Application.Context;
