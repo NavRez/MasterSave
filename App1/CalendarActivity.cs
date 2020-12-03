@@ -187,8 +187,8 @@ namespace App1
                         double saving = SavingHelper.Cost - currBill;
                         saving = Math.Round(saving, 2);
                         saving.ToString("0.00");
-                        nEvent = new Event(String.Format("Bill {0} : {1}$ , Saving : {2}$ ", ++counter, answer, saving), start, end);
-                        sEvent = new Event(String.Format(" Saving : {0}$ ", saving), start, end);
+                        nEvent = new Event(String.Format("Bill {0} : {1}$", ++counter, answer), start, end);
+                        sEvent = new Event(String.Format("Bill {0} Saving : {1}$ ", counter, saving), start, end);
                         nEvent.EventColor = Android.Graphics.Color.Blue;
                         sEvent.EventColor = Android.Graphics.Color.Red;
                         events.Add(nEvent);
@@ -221,7 +221,11 @@ namespace App1
             calendar.Add(CalendarField.Hour, 7);
             double tempTotal = tempSaving - totalSpend;
             tempTotal = Math.Round(tempTotal, 2);
-            events.Add(new Event(String.Format("Total so far : {0}$ \r\n Total Saving : {1}$ ", totalSpend, tempTotal), start, end));
+            events.Add(new Event(String.Format("Total so far : {0}$ ", totalSpend), start, end));
+            Event tempEvent = new Event(String.Format("Total Saving : {0}$ ", tempTotal), start, end);
+            tempEvent.EventColor = Android.Graphics.Color.LightGreen;
+            events.Add(tempEvent);
+            
             //events.Add(newEvent);
             //events.Add(newEvent2);
 
