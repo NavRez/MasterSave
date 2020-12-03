@@ -3,11 +3,12 @@
 using Android.App;
 using Android.OS;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 
 namespace App1
 {
-    [Activity(Label = "SettingsActivity")]
-    public class SettingsActivity : Activity
+    [Activity(Label = "@string/action_settings", Theme = "@style/AppTheme")]
+    public class SettingsActivity : AppCompatActivity
     {
         EditText year;
         EditText month;

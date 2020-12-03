@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Configuration;
-using System.Net;
-using Microsoft.Azure.Cosmos;
 using MongoDB.Driver;
 using MongoDB.Bson;
 using System.Security.Authentication;
