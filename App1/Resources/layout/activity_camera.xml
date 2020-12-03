@@ -15,8 +15,8 @@
         android:id="@+id/pictureView" />
 
     <Button
-        android:layout_width="301.0dp"
-        android:layout_height="79.5dp"
+        android:layout_width="201.0dp"
+        android:layout_height="70dp"
         android:text="Capture"
         android:id="@+id/capureButton"
         android:layout_gravity="center"

@@ -8,43 +8,53 @@
     android:minHeight="25px"
     android:background="@mipmap/gradientblue">
     <EditText
-        android:layout_width="380.5dp"
-        android:layout_height="57.5dp"
+        android:layout_width="320dp"
+        android:layout_height="58.5dp"
+        android:elevation="2dp"
         android:layout_margin="20dp"
         android:inputType="numberSigned"
         android:hint="Enter Year"
+        android:paddingLeft="20dp"
         android:textColorHint="@color/black"
+        android:background="@color/white"
         android:id="@+id/yearText"
         android:layout_marginBottom="31.5dp"
-        android:layout_marginTop="13.0dp" />
+        android:layout_marginTop="13.0dp"
+        android:layout_marginRight="30.9dp" />
     <EditText
-        android:layout_width="377.5dp"
+        android:layout_width="320.5dp"
         android:layout_height="58.5dp"
+        android:elevation="2dp"
         android:layout_margin="20dp"
+        android:paddingLeft="20dp"
+        android:background="@color/white"
         android:inputType="textLongMessage"
         android:hint="Enter Month"
         android:textColorHint="@color/black"
         android:id="@+id/monthText"
-        android:layout_marginBottom="7.0dp" />
-     <EditText
-        android:layout_width="377.0dp"
-        android:layout_height="69.5dp"
+        android:layout_marginBottom="7.0dp"
+        android:layout_marginRight="32.7dp" />
+    <EditText
+        android:layout_width="320.0dp"
+        android:layout_height="58.5dp"
+        android:elevation="2dp"
         android:inputType="numberSigned"
         android:layout_margin="20dp"
+        android:paddingLeft="20dp"
+        android:background="@color/white"
         android:hint="Enter Day (Optional)"
         android:textColorHint="@color/black"
         android:id="@+id/dayText"
         android:layout_marginBottom="0.0dp"
         android:layout_marginTop="48.5dp"
-        android:layout_marginRight="7.0dp"
-        android:layout_marginLeft="0.0dp" />
+        android:layout_marginRight="33.3dp"
+        android:layout_marginLeft="32.3dp" />
     <Button
         android:text="Submit"
         android:layout_gravity="center"
         android:layout_width="200dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:id="@+id/submitbutton"
-        android:background="@color/white"
         android:layout_marginBottom="14.5dp"
         android:layout_marginRight="0.0dp" />
 
