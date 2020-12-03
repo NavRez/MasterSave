@@ -5,13 +5,14 @@ using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 
 namespace App1
 {
-    [Activity(Label = "CameraActivity", Theme = "@style/AppTheme")]
-    public class CameraActivity : Activity
+    [Activity(Label = "@string/action_pic", Theme = "@style/AppTheme")]
+    public class CameraActivity : AppCompatActivity
     {
         Button captureButton;
         ImageView imageView;
@@ -31,10 +32,10 @@ namespace App1
             SetContentView(Resource.Layout.activity_camera);
 
             linearLayout = (LinearLayout)FindViewById(Resource.Id.cameraLayout);
-            AnimationDrawable animationDrawable = (AnimationDrawable)linearLayout.Background;
-            animationDrawable.SetEnterFadeDuration(2000);
-            animationDrawable.SetExitFadeDuration(4000);
-            animationDrawable.Start();
+            //AnimationDrawable animationDrawable = (AnimationDrawable)linearLayout.Background;
+            //animationDrawable.SetEnterFadeDuration(2000);
+            //animationDrawable.SetExitFadeDuration(4000);
+            //animationDrawable.Start();
 
             captureButton = (Button)FindViewById(Resource.Id.capureButton);
             imageView = (ImageView)FindViewById(Resource.Id.pictureView);
