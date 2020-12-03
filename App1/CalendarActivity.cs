@@ -19,7 +19,7 @@ namespace App1
             SetContentView(Resource.Layout.activity_calendar);
 
             
-            var temp = cosmosAccess.RetrieveDict();
+            var temp = cosmosAccess.RetrieveDict(); 
 
             RadCalendarView calendarView = (RadCalendarView)FindViewById(Resource.Id.calendarView);
             calendarView.SelectionMode = CalendarSelectionMode.Single;
