@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using Android.App;
 using Android.Graphics;
 using Android.OS;
+using AndroidX.AppCompat.App;
 using Com.Telerik.Widget.Calendar;
 using Com.Telerik.Widget.Calendar.Events;
 using Java.Util;
 
 namespace App1
 {
-    [Activity(Label = "CalendarActivity")]
-    public class CalendarActivity : Activity
+    [Activity(Label = "@string/action_calendar", Theme = "@style/AppTheme")]
+    public class CalendarActivity : AppCompatActivity
     {
         CosmosAccess cosmosAccess = new CosmosAccess();
         protected override void OnCreate(Bundle savedInstanceState)
@@ -221,9 +222,11 @@ namespace App1
             calendar.Add(CalendarField.Hour, 7);
             double tempTotal = tempSaving - totalSpend;
             tempTotal = Math.Round(tempTotal, 2);
-            events.Add(new Event(String.Format("Total so far : {0}$ ", totalSpend), start, end));
-            Event tempEvent = new Event(String.Format("Total Saving : {0}$ ", tempTotal), start, end);
-            tempEvent.EventColor = Android.Graphics.Color.LightGreen;
+            Event totalEvent = new Event(String.Format("Total Bills: {0}$ ", totalSpend), start, end);
+            Event tempEvent = new Event(String.Format("Total Savings : {0}$ ", tempTotal), start, end);
+            totalEvent.EventColor = Android.Graphics.Color.ParseColor("#00375D");
+            tempEvent.EventColor = Android.Graphics.Color.ParseColor("#008744");
+            events.Add(totalEvent);
             events.Add(tempEvent);
             
             //events.Add(newEvent);
@@ -231,9 +234,9 @@ namespace App1
 
             calendarView.EventAdapter.Events = events;
             calendarView.EventsDisplayMode = EventsDisplayMode.Inline;
-            calendarView.Adapter.InlineEventTimeStartTextColor = Color.White;
-            calendarView.Adapter.InlineEventTimeEndTextColor = Color.White;
-            calendarView.Adapter.InlineEventsBackgroundColor = Color.White;
+            calendarView.Adapter.InlineEventTimeStartTextColor = Color.ParseColor("#eeeeee");
+            calendarView.Adapter.InlineEventTimeEndTextColor = Color.ParseColor("#eeeeee");
+            calendarView.Adapter.InlineEventsBackgroundColor = Color.ParseColor("#eeeeee");
 
             // Create your application here
         }

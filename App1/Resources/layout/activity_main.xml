@@ -25,9 +25,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/cameraButton"
         android:layout_marginTop="0.0dp"
-        android:layout_marginLeft="150.5dp"
+        android:layout_marginLeft="140.5dp"
         android:background="@android:color/transparent"
-        android:layout_marginRight="158.2dp"
+        android:layout_marginRight="122.0dp"
         android:layout_marginBottom="14.5dp" 
         />
     <EditText
